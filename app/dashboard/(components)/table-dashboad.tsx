@@ -1,9 +1,7 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -13,19 +11,11 @@ import {
   PaginationContent,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Field, FieldLabel } from "@/components/ui/field"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
+import { ScrollShadow } from "@/components/ui/scroll-shadow"
 
 const invoices = [
   {
@@ -75,55 +65,83 @@ const invoices = [
 export function TableDashboad() {
   return (
     <>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell className="text-right">{invoice.totalAmount}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <div className="flex items-center justify-end gap-4 w-full box-border py-5">
-        <div>
-          {`page ${2} of ${10}`}
+      <div className="rounded-lg border border-border overflow-hidden bg-background">
+        <div className="p-4 border-b border-border flex items-center justify-between">
+          <div>
+            <div className="text-base font-medium">Recent Invoices</div>
+            <div className="text-sm text-muted-foreground">Latest transactions and payment status</div>
+          </div>
+          <div className="text-sm text-muted-foreground">{`page ${2} of ${10}`}</div>
         </div>
-        <Pagination className="mx-0 w-auto">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationLink isActive size={"icon-sm"} className="opacity-40 cursor-pointer">
-                <ChevronsLeftIcon />
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink isActive size={"icon-sm"} className="opacity-40">
-                <ChevronLeftIcon />
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink isActive size={"icon-sm"}>
-                <ChevronRightIcon />
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink isActive size={"icon-sm"}>
-                <ChevronsRightIcon />
-              </PaginationLink>
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div >
+
+        <ScrollShadow>
+          <Table className="min-w-[640px]">
+            <TableHeader>
+              <TableRow className="bg-muted/40">
+                <TableHead className="w-[120px]">Invoice</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Method</TableHead>
+                <TableHead className="text-right">Amount</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {invoices.map((invoice, idx) => {
+                const statusVariant =
+                  invoice.paymentStatus === "Paid"
+                    ? "bg-green-100 text-green-800"
+                    : invoice.paymentStatus === "Pending"
+                      ? "bg-yellow-100 text-yellow-800"
+                      : "bg-red-100 text-red-800";
+
+                return (
+                  <TableRow
+                    key={invoice.invoice}
+                    className={cn(
+                      "transition-colors",
+                      idx % 2 === 0 ? "bg-background" : "bg-muted/20",
+                      "hover:bg-muted/40"
+                    )}
+                  >
+                    <TableCell className="font-medium">{invoice.invoice}</TableCell>
+                    <TableCell>
+                      <Badge className={statusVariant}>{invoice.paymentStatus}</Badge>
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">{invoice.paymentMethod}</TableCell>
+                    <TableCell className="text-right font-medium tabular-nums">{invoice.totalAmount}</TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </ScrollShadow>
+
+        <div className="flex items-center justify-end gap-3 w-full box-border p-4 border-t border-border">
+          <Pagination className="mx-0 w-auto">
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationLink isActive size={"icon-sm"} className="opacity-50 cursor-not-allowed">
+                  <ChevronsLeftIcon />
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink isActive size={"icon-sm"} className="opacity-50 cursor-not-allowed">
+                  <ChevronLeftIcon />
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink isActive size={"icon-sm"}>
+                  <ChevronRightIcon />
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink isActive size={"icon-sm"}>
+                  <ChevronsRightIcon />
+                </PaginationLink>
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      </div>
     </>
 
   )

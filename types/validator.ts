@@ -5,34 +5,36 @@
 import type { AppRoutes, LayoutRoutes, ParamMap } from "./routes.js"
 import type { ResolvingMetadata, ResolvingViewport } from "next/types.js"
 
+type UnsafeAny = unknown
+
 type AppPageConfig<Route extends AppRoutes = AppRoutes> = {
-  default: React.ComponentType<{ params: Promise<ParamMap[Route]> } & any> | ((props: { params: Promise<ParamMap[Route]> } & any) => React.ReactNode | Promise<React.ReactNode> | never | void | Promise<void>)
-  generateStaticParams?: (props: { params: ParamMap[Route] }) => Promise<any[]> | any[]
+  default: React.ComponentType<{ params: Promise<ParamMap[Route]> } & Record<string, UnsafeAny>> | ((props: { params: Promise<ParamMap[Route]> } & Record<string, UnsafeAny>) => React.ReactNode | Promise<React.ReactNode> | never | void | Promise<void>)
+  generateStaticParams?: (props: { params: ParamMap[Route] }) => Promise<UnsafeAny[]> | UnsafeAny[]
   generateMetadata?: (
-    props: { params: Promise<ParamMap[Route]> } & any,
+    props: { params: Promise<ParamMap[Route]> } & Record<string, UnsafeAny>,
     parent: ResolvingMetadata
-  ) => Promise<any> | any
+  ) => Promise<UnsafeAny> | UnsafeAny
   generateViewport?: (
-    props: { params: Promise<ParamMap[Route]> } & any,
+    props: { params: Promise<ParamMap[Route]> } & Record<string, UnsafeAny>,
     parent: ResolvingViewport
-  ) => Promise<any> | any
-  metadata?: any
-  viewport?: any
+  ) => Promise<UnsafeAny> | UnsafeAny
+  metadata?: UnsafeAny
+  viewport?: UnsafeAny
 }
 
 type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
   default: React.ComponentType<LayoutProps<Route>> | ((props: LayoutProps<Route>) => React.ReactNode | Promise<React.ReactNode> | never | void | Promise<void>)
-  generateStaticParams?: (props: { params: ParamMap[Route] }) => Promise<any[]> | any[]
+  generateStaticParams?: (props: { params: ParamMap[Route] }) => Promise<UnsafeAny[]> | UnsafeAny[]
   generateMetadata?: (
-    props: { params: Promise<ParamMap[Route]> } & any,
+    props: { params: Promise<ParamMap[Route]> } & Record<string, UnsafeAny>,
     parent: ResolvingMetadata
-  ) => Promise<any> | any
+  ) => Promise<UnsafeAny> | UnsafeAny
   generateViewport?: (
-    props: { params: Promise<ParamMap[Route]> } & any,
+    props: { params: Promise<ParamMap[Route]> } & Record<string, UnsafeAny>,
     parent: ResolvingViewport
-  ) => Promise<any> | any
-  metadata?: any
-  viewport?: any
+  ) => Promise<UnsafeAny> | UnsafeAny
+  metadata?: UnsafeAny
+  viewport?: UnsafeAny
 }
 
 

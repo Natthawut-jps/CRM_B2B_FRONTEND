@@ -30,9 +30,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <TopBar />
-        <div className="max-w-7xl mx-auto flex gap-x-5.5  border border-[#737373] rounded-sm w-full">
-            <AppSidebar />
-          {children}
+        <div className="max-w-7xl mx-auto w-full px-3 sm:px-4">
+          <div className="flex w-full gap-3 sm:gap-5 border border-border rounded-sm overflow-hidden">
+            <div className="shrink-0">
+              <AppSidebar />
+            </div>
+            <main className="flex-1 min-w-0 border-l border-border">
+              {children}
+            </main>
+          </div>
         </div>
       </body>
     </html>
