@@ -8,7 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CircleQuestionMarkIcon, EllipsisVerticalIcon, FileTextIcon, LogOutIcon, SettingsIcon } from "lucide-react";
+import { CircleQuestionMarkIcon, EllipsisVerticalIcon, FileTextIcon, LogOutIcon, MenuIcon, SettingsIcon } from "lucide-react";
 import { Suspense } from "react";
 import { Notification } from "./notification";
 import { Search } from "./search";
@@ -18,14 +18,23 @@ export type DataType = {
     title: string;
     userId: number;
 }
-export  function TopBar() {
+export function TopBar({ onSidebarToggle }: { onSidebarToggle?: () => void }) {
 
     return (
         <div className=" w-full max-w-7xl mx-auto p-1">
             <div className="flex w-full h-fit p-2.5 space-x-1.5">
-                <strong className="flex items-start">
+                <div className="flex flex-col gap-4">
+                    <strong className="flex items-start ">
                         {"Admin"}
-                </strong>
+                    </strong>
+                    <button
+                        onClick={onSidebarToggle}
+                        className="cursor-pointer sm:hidden p-2 rounded-lg hover:bg-accent/10 transition-colors self-start"
+                        aria-label="Toggle sidebar"
+                    >
+                        <MenuIcon className="h-5 w-5 text-muted-foreground" />
+                    </button>
+                </div>
                 <div className="flex flex-wrap-reverse items-center justify-end gap-2.5 h-fit w-full">
                     <Search />
                     <div className="flex gap-2.5 w-fit items-center">
