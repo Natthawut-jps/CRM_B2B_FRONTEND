@@ -1,4 +1,4 @@
-import { ScrollShadow } from "@/components/ui/scroll-shadow";
+
 
 export default function Support() {
   const tickets = [
@@ -27,7 +27,7 @@ export default function Support() {
           </div>
           <input className="h-9 w-40 sm:w-64 rounded-md border border-border bg-background px-3 text-sm" placeholder="Search tickets..." />
         </div>
-        <ScrollShadow>
+        <>
           <table className="w-full min-w-[720px] text-sm">
             <thead className="bg-muted/50">
               <tr className="text-left">
@@ -50,7 +50,7 @@ export default function Support() {
               ))}
             </tbody>
           </table>
-        </ScrollShadow>
+        </>
       </div>
     </div>
   );

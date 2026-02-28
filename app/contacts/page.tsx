@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { ScrollShadow } from "@/components/ui/scroll-shadow";
+
 import { cn } from "@/lib/utils";
 import { useMemo, useState } from "react";
 
@@ -139,17 +139,16 @@ export default function Contacts() {
           <div className="text-base font-medium">Contact List</div>
           <div className="text-sm text-muted-foreground">{filtered.length} results</div>
         </div>
-        <ScrollShadow>
-          <Table className="min-w-[960px]">
+        <>
+          <Table className="min-w-[700px] lg:min-w-[800px]">
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
+                <TableHead className="w-[80px]">ID</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Company</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Owner</TableHead>
-                <TableHead>Last Contact</TableHead>
+                <TableHead className="w-[120px]">Status</TableHead>
+                <TableHead className="w-[80px]">Owner</TableHead>
+                <TableHead className="w-[100px]">Last Contact</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -159,10 +158,9 @@ export default function Contacts() {
                   <TableCell>
                     <div className="font-medium">{c.name}</div>
                     <div className="text-xs text-muted-foreground">{c.email}</div>
-                    <div className="text-xs text-muted-foreground">{c.phone}</div>
+                    <div className="text-xs text-muted-foreground hidden sm:block">{c.phone}</div>
                   </TableCell>
                   <TableCell>{c.company}</TableCell>
-                  <TableCell>{c.title}</TableCell>
                   <TableCell>
                     <Badge className={cn(statusStyles[c.status])}>{c.status}</Badge>
                   </TableCell>
@@ -172,7 +170,7 @@ export default function Contacts() {
               ))}
             </TableBody>
           </Table>
-        </ScrollShadow>
+        </>
       </div>
     </div>
   );

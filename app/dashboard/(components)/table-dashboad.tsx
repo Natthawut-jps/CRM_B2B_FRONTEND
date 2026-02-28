@@ -15,7 +15,7 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { ScrollShadow } from "@/components/ui/scroll-shadow"
+
 
 const invoices = [
   {
@@ -74,7 +74,7 @@ export function TableDashboad() {
           <div className="text-sm text-muted-foreground">{`page ${2} of ${10}`}</div>
         </div>
 
-        <ScrollShadow>
+        <>
           <Table className="min-w-[640px]">
             <TableHeader>
               <TableRow className="bg-muted/40">
@@ -113,7 +113,7 @@ export function TableDashboad() {
               })}
             </TableBody>
           </Table>
-        </ScrollShadow>
+        </>
 
         <div className="flex items-center justify-end gap-3 w-full box-border p-4 border-t border-border">
           <Pagination className="mx-0 w-auto">

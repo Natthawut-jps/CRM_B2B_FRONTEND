@@ -1,4 +1,4 @@
-import { ScrollShadow } from "@/components/ui/scroll-shadow";
+
 
 export default function Reports() {
   return (
@@ -41,7 +41,7 @@ export default function Reports() {
           <div className="text-base font-medium">Top Sources</div>
           <div className="text-sm text-muted-foreground">Where your leads come from</div>
         </div>
-        <ScrollShadow>
+        <>
           <table className="w-full min-w-[640px] text-sm">
             <thead className="bg-muted/50">
               <tr className="text-left">
@@ -72,7 +72,7 @@ export default function Reports() {
               </tr>
             </tbody>
           </table>
-        </ScrollShadow>
+        </>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ScrollShadow } from "@/components/ui/scroll-shadow";
+
 import { cn } from "@/lib/utils";
 import { useMemo, useState } from "react";
 
@@ -61,7 +61,7 @@ export default function Unassigned() {
           <div className="text-base font-medium">Results</div>
           <div className="text-sm text-muted-foreground">{filtered.length} leads</div>
         </div>
-        <ScrollShadow>
+        <>
           <Table className="min-w-[840px]">
             <TableHeader>
               <TableRow>
@@ -93,7 +93,7 @@ export default function Unassigned() {
               ))}
             </TableBody>
           </Table>
-        </ScrollShadow>
+        </>
       </div>
     </div>
   );

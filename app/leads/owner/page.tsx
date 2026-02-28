@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ScrollShadow } from "@/components/ui/scroll-shadow";
+
 import { cn } from "@/lib/utils";
 import { useMemo, useState } from "react";
 
@@ -67,7 +67,7 @@ export default function Ownerlead() {
           <div className="text-base font-medium">Results</div>
           <div className="text-sm text-muted-foreground">{filtered.length} leads</div>
         </div>
-        <ScrollShadow>
+        <>
           <Table className="min-w-[720px]">
             <TableHeader>
               <TableRow>
@@ -95,7 +95,7 @@ export default function Ownerlead() {
               ))}
             </TableBody>
           </Table>
-        </ScrollShadow>
+        </>
       </div>
     </div>
   );

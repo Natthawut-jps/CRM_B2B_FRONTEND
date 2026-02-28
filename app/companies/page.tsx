@@ -1,4 +1,4 @@
-import { ScrollShadow } from "@/components/ui/scroll-shadow";
+
 
 export default function Companies() {
     return (
@@ -44,7 +44,7 @@ export default function Companies() {
                     </div>
                     <input className="h-9 w-40 sm:w-64 rounded-md border border-border bg-background px-3 text-sm" placeholder="Search companies..." />
                 </div>
-                <ScrollShadow>
+                {/* <> */}
                     <table className="w-full min-w-[720px] text-sm">
                         <thead className="bg-muted/50">
                             <tr className="text-left">
@@ -79,7 +79,7 @@ export default function Companies() {
                             </tr>
                         </tbody>
                     </table>
-                </ScrollShadow>
+                {/* </> */}
             </div>
         </div>
     )

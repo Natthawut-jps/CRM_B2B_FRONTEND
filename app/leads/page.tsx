@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { ScrollShadow } from "@/components/ui/scroll-shadow";
+
 import { cn } from "@/lib/utils";
 import { useMemo, useState } from "react";
 
@@ -145,17 +145,17 @@ export default function Leads() {
             <div className="text-sm text-muted-foreground">{filtered.length} results</div>
           </div>
         </div>
-        <ScrollShadow>
-          <Table className="min-w-[900px]">
+        <>
+          <Table className="min-w-[550px] lg:min-w-[650px]">
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
+                <TableHead className="w-[80px]">ID</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Company</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Source</TableHead>
-                <TableHead>Owner</TableHead>
-                <TableHead>Created</TableHead>
+                <TableHead className="w-[100px]">Status</TableHead>
+                <TableHead className="hidden md:table-cell">Source</TableHead>
+                <TableHead className="w-[80px]">Owner</TableHead>
+                <TableHead className="w-[100px]">Created</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -170,14 +170,14 @@ export default function Leads() {
                   <TableCell>
                     <Badge className={cn(statusStyles[l.status])}>{l.status}</Badge>
                   </TableCell>
-                  <TableCell>{l.source}</TableCell>
+                  <TableCell className="hidden md:table-cell">{l.source}</TableCell>
                   <TableCell>{l.owner ?? "—"}</TableCell>
                   <TableCell>{l.createdAt}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        </ScrollShadow>
+        </>
       </div>
     </div>
   );
