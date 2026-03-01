@@ -1,10 +1,13 @@
 "use client"
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useMemo, useState } from "react";
 
@@ -87,7 +90,71 @@ export default function Unassigned() {
                   </TableCell>
                   <TableCell>{l.createdAt}</TableCell>
                   <TableCell className="text-right">
-                    <Button variant="secondary" size="sm">Assign</Button>
+                    <Dialog>
+                      <DialogTrigger className="cursor-pointer" asChild>
+                        <Button variant="secondary" size="sm">Assign</Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-sm">
+                        <DialogHeader>
+                          <DialogTitle>Edit profile</DialogTitle>
+                          <DialogDescription>
+                            Make changes to your profile here. Click save when you&apos;re
+                            done.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <form className="w-full max-w-sm">
+                          <FieldGroup>
+                            <Field>
+                              <FieldLabel htmlFor="form-name">Name</FieldLabel>
+                              <Input
+                                id="form-name"
+                                type="text"
+                                placeholder="Evil Rabbit"
+                                required
+                              />
+                            </Field>
+                            <Field>
+                              <FieldLabel htmlFor="form-email">Email</FieldLabel>
+                              <Input id="form-email" type="email" placeholder="john@example.com" />
+                              <FieldDescription>
+                                We&apos;ll never share your email with anyone.
+                              </FieldDescription>
+                            </Field>
+                            <div className="grid grid-cols-2 gap-4">
+                              <Field>
+                                <FieldLabel htmlFor="form-phone">Phone</FieldLabel>
+                                <Input id="form-phone" type="tel" placeholder="0123456789" />
+                              </Field>
+                              <Field>
+                                <FieldLabel htmlFor="form-country">Country</FieldLabel>
+                                <Select defaultValue="us">
+                                  <SelectTrigger id="form-country">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="us">United States</SelectItem>
+                                    <SelectItem value="uk">United Kingdom</SelectItem>
+                                    <SelectItem value="ca">Canada</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </Field>
+                            </div>
+                            <Field>
+                              <FieldLabel htmlFor="form-address">Address</FieldLabel>
+                              <Input id="form-address" type="text" placeholder="123 Main St" />
+                            </Field>
+                            <Field orientation="horizontal">
+                              <DialogClose className="cursor-pointer" asChild>
+                                <Button type="button" variant="outline">
+                                  Cancel
+                                </Button>
+                              </DialogClose>
+                              <Button className="cursor-pointer" type="submit">Submit</Button>
+                            </Field>
+                          </FieldGroup>
+                        </form>
+                      </DialogContent>
+                    </Dialog>
                   </TableCell>
                 </TableRow>
               ))}

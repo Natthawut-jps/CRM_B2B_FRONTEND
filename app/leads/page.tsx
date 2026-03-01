@@ -13,7 +13,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 
 import { cn } from "@/lib/utils";
-import { useMemo, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { data } from "../dashboard/(components)/card-analyze";
 
 type LeadStatus = "new" | "contacted" | "qualified" | "lost";
 
@@ -42,10 +45,29 @@ const leadsSeed: Lead[] = [
   { id: "L-1004", name: "Lisa Anderson", company: "Startup Inc", email: "lisa@startup.io", source: "Cold Email", status: "lost", owner: "Tom", createdAt: "2026-02-22" },
 ];
 
+export function useDebounce<T>(value: T, delay = 400) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+  return debouncedValue;
+}
+
 export default function Leads() {
   const [q, setQ] = useState("");
   const [status, setStatus] = useState<"all" | LeadStatus>("all");
   const [source, setSource] = useState<"all" | Lead["source"]>("all");
+  const [loading, setLoading] = useState(false);
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const limit = 10;
+  const debouncedQ = useDebounce(q, 400);
 
   const handleStatusChange = (v: string) => {
     if (v === "all" || v === "new" || v === "contacted" || v === "qualified" || v === "lost") {
@@ -79,6 +101,48 @@ export default function Leads() {
     return { total, newCount, qualified, lost };
   }, []);
 
+  // useEffect(() => {
+  //   if (q && q.trim().length < 2) {
+  //     setLeads([]);
+  //     setTotal(0);
+  //     return;
+  //   }
+  //   const controller = new AbortController();
+  //   const fetchData = async () => {
+  //     try {
+
+  //       setLoading(true);
+
+  //       const param = new URLSearchParams({
+  //         q: debouncedQ,
+  //         status,
+  //         source,
+  //         page: page.toString(),
+  //         limit: limit.toString(),
+  //       });
+  //       const response = await fetch(`/api/leads?${param}`, { signal: controller.signal });
+
+  //       if (!response.ok) throw new Error("Failed to fetch");
+
+  //       const data = await response.json();
+
+  //       setLeads(data.leads);
+  //       setTotal(data.total);
+  //     } catch (error) {
+  //       console.error("Failed to fetch leads:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchData();
+  //   return () => {
+  //     controller.abort();
+  //   };
+  // }, [debouncedQ, status, source, page]);
+
+  // useEffect(() => {
+  //   setPage(1);
+  // }, [debouncedQ, status, source])
   return (
     <div className="p-6 space-y-6 w-full">
       <div className="flex items-center justify-between">
@@ -86,7 +150,67 @@ export default function Leads() {
           <h1 className="text-2xl font-semibold">Leads</h1>
           <p className="text-sm text-muted-foreground">Capture, qualify, and convert prospects</p>
         </div>
-        <Button>Add Lead</Button>
+        <Dialog>
+          <DialogTrigger className="cursor-pointer" asChild>
+            <Button>Add Lead</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add Lead</DialogTitle>
+            </DialogHeader>
+            <form className="w-full max-w-sm">
+              <FieldGroup>
+                <Field>
+                  <FieldLabel htmlFor="form-name">Name</FieldLabel>
+                  <Input
+                    id="form-name"
+                    type="text"
+                    placeholder="Evil Rabbit"
+                    required
+                  />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="form-email">Email</FieldLabel>
+                  <Input id="form-email" type="email" placeholder="john@example.com" />
+                  <FieldDescription>
+                    We&apos;ll never share your email with anyone.
+                  </FieldDescription>
+                </Field>
+                <div className="grid grid-cols-2 gap-4">
+                  <Field>
+                    <FieldLabel htmlFor="form-phone">Phone</FieldLabel>
+                    <Input id="form-phone" type="tel" placeholder="0123456789" />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="form-country">Country</FieldLabel>
+                    <Select defaultValue="us">
+                      <SelectTrigger id="form-country">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="us">United States</SelectItem>
+                        <SelectItem value="uk">United Kingdom</SelectItem>
+                        <SelectItem value="ca">Canada</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </div>
+                <Field>
+                  <FieldLabel htmlFor="form-address">Address</FieldLabel>
+                  <Input id="form-address" type="text" placeholder="123 Main St" />
+                </Field>
+                <Field orientation="horizontal">
+                  <DialogClose className="cursor-pointer" asChild>
+                    <Button type="button" variant="outline">
+                      Cancel
+                    </Button>
+                  </DialogClose>
+                  <Button className="cursor-pointer" type="submit">Submit</Button>
+                </Field>
+              </FieldGroup>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -111,6 +235,11 @@ export default function Leads() {
       <div className="rounded-lg border border-border p-4 space-y-4">
         <div className="flex flex-col md:flex-row gap-3">
           <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name, company, email..." />
+          {q && q.length > 0 && q.length < 2 && (
+            <p className="text-[10px] text-gray-500">
+              Type at least two characters to search.
+            </p>
+          )}
           <Select value={status} onValueChange={handleStatusChange}>
             <SelectTrigger className="w-full md:w-52">
               <SelectValue placeholder="Status" />

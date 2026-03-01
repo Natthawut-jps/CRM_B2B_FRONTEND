@@ -55,7 +55,6 @@ export default function Ownerlead() {
           <h1 className="text-2xl font-semibold">My Leads</h1>
           <p className="text-sm text-muted-foreground">Leads assigned to you ({currentOwner})</p>
         </div>
-        <Button>Add Lead</Button>
       </div>
 
       <div className="rounded-lg border border-border p-4">
