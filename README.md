@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CRM B2B Frontend
 
-## Getting Started
+ระบบ CRM (Customer Relationship Management) สำหรับธุรกิจ B2B ที่พัฒนาด้วย Next.js, React, TypeScript และ Tailwind CSS
 
-First, run the development server:
+## เทคโนโลยีที่ใช้
+
+- **Next.js 16** - Framework สำหรับ React
+- **React 19** - Library สำหรับสร้าง UI
+- **TypeScript** - ภาษาโปรแกรมที่มีระบบ Type Safety
+- **Tailwind CSS v4** - CSS Framework
+- **shadcn/ui** - UI Component Library
+- **Lucide React** - Icon Library
+- **Recharts** - สร้างกราฟและ Chart
+
+## โครงสร้างโปรเจกต์
+
+```
+├── app/                    # Next.js App Router
+│   ├── (components)/       # Shared components
+│   ├── dashboard/          # หน้า Dashboard
+│   ├── leads/              # หน้าจัดการ Leads
+│   ├── contacts/           # หน้าจัดการ Contacts
+│   ├── companies/          # หน้าจัดการ Companies
+│   ├── deals/              # หน้าจัดการ Deals
+│   ├── activities/         # หน้าจัดการ Activities
+│   ├── reports/            # หน้ารายงาน
+│   ├── marketing/          # หน้า Marketing
+│   └── support/            # หน้า Support
+├── components/             # React Components
+│   └── ui/                 # shadcn/ui components
+├── hooks/                  # Custom React Hooks
+├── lib/                    # Utility functions
+├── repositories/           # Data access layer
+├── services/               # Business logic layer
+├── types/                  # TypeScript type definitions
+└── config/                 # Configuration files
+```
+
+## การติดตั้ง
+
+1. ติดตั้ง dependencies:
+
+```bash
+npm install
+```
+
+2. ตั้งค่า Environment Variables:
+
+```bash
+cp .env.example .env.development
+```
+
+แก้ไขไฟล์ `.env.development` ให้ตรงกับ environment ของคุณ
+
+## การรันโปรเจกต์
+
+### Development Mode
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+เปิด [http://localhost:3000](http://localhost:3000) ใน browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
+
+## Features หลัก
+
+- **Dashboard** - ภาพรวมข้อมูลและสถิติการขาย
+- **Leads Management** - จัดการ Lead หรือผู้สนใจสินค้า/บริการ
+- **Contacts** - จัดการข้อมูลผู้ติดต่อ
+- **Companies** - จัดการข้อมูลบริษัทลูกค้า
+- **Deals Pipeline** - จัดการ Pipeline การขาย
+- **Activities** - ติดตามกิจกรรมและการติดต่อ
+- **Reports** - รายงานและการวิเคราะห์
+- **Marketing** - เครื่องมือทางการตลาด
+- **Support** - ระบบช่วยเหลือลูกค้า
+
+## Scripts
+
+- `npm run dev` - รัน development server
+- `npm run build` - สร้าง production build
+- `npm run start` - รัน production server
+- `npm run lint` - รัน ESLint
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [React Documentation](https://react.dev)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [shadcn/ui Documentation](https://ui.shadcn.com)
